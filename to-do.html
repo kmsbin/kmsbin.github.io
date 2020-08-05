@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>to-do List</title>
+</head>
+<style>
+    :root {
+            --border: 1px solid #00000011;
+            --additem-bkcolor: #00000006
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            color: #656565;
+            outline: none;
+        }
+
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .add-item {
+            display: flex;
+            border-radius: 4px;
+            margin: .5em;
+            border: var(--border);
+            background: var(--additem-bkcolor);
+            overflow: hidden;
+            /* height: 5em; */
+            /* padding: .5em; */
+        }
+
+        .add-item input {
+            flex-grow: 1;
+            padding: 1em;
+            font-size: 1em;
+            background: transparent;
+            border: 0 none;
+        }
+        .add-item input:focus {
+            background: #d4d4d4;
+        }
+        .add-item button {
+            border: 0;
+            background: var(--additem-bkcolor);
+            cursor: pointer;
+            /* cursor: pointer; */
+        }
+        .add-item button:hover {
+            background: #cccccc;
+        }
+        .container {
+            height: 90%;
+            /* display: flex; */
+            /* flex-direction: column; */
+            flex: none;
+            /* size: solid; */
+            /* display: block; */
+        }
+        .todo {
+            /* flex-grow: 3; */
+            overflow: auto;
+            height: 75vh;
+            size: solid;
+            flex:none;
+        }
+
+        .done {
+            height: 25vh;
+            /* flex-grow: 1; */
+            opacity: .5;
+            cursor:not-allowed;
+            user-select: none;
+            overflow: auto;
+        }
+
+        .item {
+            display: flex;
+            border: var(--border);
+            background: var(--additem-bkcolor);
+            margin: .5em;
+            border-radius: 4px;
+            padding: .5em;
+            align-items: center;
+        }
+
+        .item input {
+            display: none;
+        }
+
+        .item input + .check {
+            /* background: red; */
+            width: 1.5em;
+            height: 1.5em;
+            border: 1.5px solid #656565;
+            border-radius: 3px;
+            position: relative;
+            transition: .3s;
+            cursor: pointer;
+        }
+        
+        .item input + .check:before,
+         .item input + .check:after  {
+            content: " ";
+            position: absolute;
+            top: 5%;
+            border-radius: 2px;
+            left: calc(50% - 1px);
+            height: 90%;
+            width: 2px;
+            background: #656565;
+            transition: .3s;
+            --rotate: 0;
+            --transX:0;
+            --transY:0;
+            transform: rotate(var(--rotate)) translateX(var(--transX)) translateY(var(--transY));
+
+        }
+        .item input + .check:after {
+            --rotate: -45deg;
+        }
+        .item input + .check:before {
+            --rotate: 45deg
+        }
+        .item input:checked + .check:before {
+            height: 49.5%;
+            top: 13.0357%;
+            background: #FFFFFF;
+            --rotate: -45deg;
+            --transX: -.35em;
+            /* transform: rotate(-45deg) translateX(-.35em) ; */
+
+            /* transform: rotate(0deg); */
+        }
+        .item input:checked + .check:after {
+            border-radius: 2px;
+            top: 13%;
+            background: #FFFFFF;
+            height: 67%;
+            --rotate: 45deg;
+            --transX: .18em;
+            --transY: -.1em;
+            /* transform: rotate(45deg) translateX(.18em) translateY(-.1em); */
+        }
+        .item input:checked + .check {
+            background: #009688;
+            border-color: #009688;
+        }
+
+        .item p {
+            flex-grow: 1;
+            margin: 0;
+        }
+
+        .done .item p {
+            text-decoration: line-through;
+
+        }
+</style>
+
+<body>
+    <div class="add-item">
+        <input type="text" autofocus>
+        <button>add</button>
+    </div>
+    <div class="container">
+        <div class="todo">
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+                <div class="item">
+                    <p>
+                        Faltar aula do varela.
+                    </p>
+                    <label>
+                        <input class="check" type="checkbox" >
+                        <div class="check"> </div>
+                    </label>
+                </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+            <div class="item">
+                <p>
+                    Faltar aula do varela.
+                </p>
+                <label>
+                    <input class="check" type="checkbox" >
+                    <div class="check"> </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="done">
+            <div class="item">
+                <p>
+                    Passar do segundo ano.
+                </p>
+                <label>
+                    <input class="check"type="checkbox" checked>
+                    <div class="check"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        let checkBox = document.querySelector('input.check')
+        let done = document.querySelector('.done');
+        let todo = document.querySelector('.todo');
+
+        todo.onclick = aa;
+        // done.onclick = aa;
+        function aa(e){
+            // console.log(e.target)
+            if(e.target.check=='checked'){
+                console.log(e.target.closest('.item'))
+                todo.appendChild(e.target.closest('.item'));
+            }else{
+                console.log(e.target.closest('.item'))
+                done.appendChild(e.target.closest('.item'));
+            }
+        }
+
+
+
+
+
+        // var bt = document.querySelector('.add-item>button');
+        // var inp = document.querySelector('.add-item>input');
+
+        // bt.onclick = aa;
+        // function aa(e) {
+        //     console.log(inp.value);
+        //     let division = document.createElement('div');
+        //     division.setAttribute('class', 'item');
+        //     division = division.createElement('p')
+        //     console.log(division)        
+        //     inp.value = '';
+        // }
+    </script>
+</body>
+
+</html>
