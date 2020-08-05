@@ -223,11 +223,13 @@
             copy.className = "item";
             let items = copy.childNodes;
             items[1].innerHTML = text;
+
             return copy;
         }
 
         addItem.addEventListener("click", (e)=>{
             todo.appendChild(createItem(input.value))
+            input.value = ""
         })
         todo.onclick = aa;
         // done.onclick = aa;
